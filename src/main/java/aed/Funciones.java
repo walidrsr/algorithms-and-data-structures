@@ -1,3 +1,5 @@
+package aed;
+
 class Funciones {
 
 /***  Primera parte: Funciones en java ***/
