@@ -11,7 +11,8 @@ public class Fecha {
     }
 
     public Fecha(Fecha fecha) {
-        // Implementar
+        dia = fecha.dia;
+        mes= fecha.mes;
     }
 
     public Integer dia() {
@@ -23,18 +24,39 @@ public class Fecha {
     }
 
     public String toString() {
-        // Implementar
-        return "";
+        return dia + "/" + mes;
     }
 
     @Override
     public boolean equals(Object otra) {
-        // Implementar
-        return true;
+        boolean otranull = (otra == null);
+        if(otranull){
+            return false;
+        }
+        boolean classdistint= otra.getClass() != this.getClass();
+
+        if (classdistint){
+            return false;
+        }
+
+        Fecha otrafecha = (Fecha) otra;
+
+
+        return dia == otrafecha.dia && mes == otrafecha.mes ;
     }
 
     public void incrementarDia() {
-        // Implementar
+        if (dia == 31 && mes == 12){
+            dia = 1;
+            mes = 1;
+        }
+        else {
+            dia = dia +1;
+            if (dia > diasEnMes(mes)){
+                dia = 1; 
+                mes = mes +1 ;
+            }
+        }
     }
 
     private int diasEnMes(int mes) {

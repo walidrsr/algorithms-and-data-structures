@@ -1,36 +1,54 @@
 package aed;
 
 public class Recordatorio {
+    private String mensaje;
+    private Fecha fecha;
+    private Horario horario;
+
+
 
     public Recordatorio(String mensaje, Fecha fecha, Horario horario) {
-        // Implementar
+        this.mensaje = mensaje;
+        this.fecha = new Fecha (fecha);
+        this.horario = horario;
     }
 
     public Horario horario() {
-        // Implementar
-        return null;
+
+        return horario;
     }
 
     public Fecha fecha() {
         // Implementar
-        return null;
+        return new Fecha (fecha);
     }
 
     public String mensaje() {
         // Implementar
-        return "";
+        return mensaje;
     }
 
     @Override
     public String toString() {
-        // Implementar
-        return "";
+        return mensaje + " @ " + fecha+" "+ horario;
     }
 
     @Override
     public boolean equals(Object otro) {
-        // Implementar
-        return true;
+        boolean otronull = (otro == null);
+        if(otronull){
+            return false;
+        }
+        boolean classdistint= otro.getClass() != this.getClass();
+
+        if (classdistint){
+            return false;
+        }
+
+        Recordatorio otroRecordatorio = (Recordatorio) otro;
+
+
+        return otroRecordatorio.mensaje == this.mensaje && otroRecordatorio.horario == this.horario && otroRecordatorio.fecha == this.fecha;
     }
 
 }

@@ -1,19 +1,22 @@
 package aed;
 
 public class Agenda {
+    Fecha fecha;
+    Recordatorio recordatorios;
 
     public Agenda(Fecha fechaActual) {
-        // Implementar
+        this.fecha = fechaActual;
+        
     }
 
     public void agregarRecordatorio(Recordatorio recordatorio) {
-        // Implementar
+        this.recordatorios = recordatorio;
     }
 
     @Override
     public String toString() {
-        // Implementar
-        return "";
+
+        return this.fecha + " ==== " + this.recordatorios;
     }
 
     public void incrementarDia() {
@@ -22,7 +25,7 @@ public class Agenda {
 
     public Fecha fechaActual() {
         // Implementar
-        return null;
+        return this.fecha;
     }
 
 }
