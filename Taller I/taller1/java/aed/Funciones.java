@@ -141,7 +141,9 @@ class Funciones {
         boolean res = true;
         if (s2.length() < s1.length()){
             return res = false;
-        } else {
+        } else 
+        
+        {
         
         int j = s2.length() -1;
         for (int i = s1.length()-1; i >= 0 ; i--){
@@ -152,9 +154,11 @@ class Funciones {
             else {
                 res = false;
             }
+
             j = j -1;
         }
         }
+        
         return res;
     }
 

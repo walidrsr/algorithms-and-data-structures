@@ -1,27 +1,27 @@
 package aed;
 
 class ArregloRedimensionableDeRecordatorios {
-
+    private Recordatorio[] recordatorios ;
+    
     public ArregloRedimensionableDeRecordatorios() {
-        // Implementar
+       this.recordatorios = new Recordatorio [0];
     }
 
     public int longitud() {
-        // Implementar
-        return -1;
+        return recordatorios.length;
     }
 
     public void agregarAtras(Recordatorio i) {
-        // Implementar
+        recordatorios[recordatorios.length-1] = i;
     }
 
     public Recordatorio obtener(int i) {
-        // Implementar
-        return null;
+        Recordatorio elem = recordatorios[i] ;
+        return elem ;
     }
 
     public void quitarAtras() {
-        // Implementar
+        
     }
 
     public void modificarPosicion(int indice, Recordatorio valor) {

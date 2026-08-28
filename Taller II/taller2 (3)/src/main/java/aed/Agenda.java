@@ -2,7 +2,7 @@ package aed;
 
 public class Agenda {
     Fecha fecha;
-    Recordatorio recordatorios;
+    Recordatorio[] recordatorios;
 
     public Agenda(Fecha fechaActual) {
         this.fecha = fechaActual;
@@ -10,7 +10,7 @@ public class Agenda {
     }
 
     public void agregarRecordatorio(Recordatorio recordatorio) {
-        this.recordatorios = recordatorio;
+       // this.recordatorios = recordatorio;
     }
 
     @Override

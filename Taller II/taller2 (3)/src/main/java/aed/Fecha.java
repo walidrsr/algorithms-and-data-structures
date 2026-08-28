@@ -12,7 +12,7 @@ public class Fecha {
 
     public Fecha(Fecha fecha) {
         dia = fecha.dia;
-        mes= fecha.mes;
+        mes = fecha.mes;
     }
 
     public Integer dia() {
