@@ -1,5 +1,4 @@
 package aed;
-
 public class Horario {
     private int hora;
     private int minutos;

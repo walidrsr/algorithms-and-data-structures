@@ -1,5 +1,5 @@
-package aed;
 
+package aed;
 public class Recordatorio {
     private String mensaje;
     private Fecha fecha;
@@ -19,7 +19,6 @@ public class Recordatorio {
     }
 
     public Fecha fecha() {
-        // Implementar
         return new Fecha (fecha);
     }
 
@@ -48,7 +47,7 @@ public class Recordatorio {
         Recordatorio otroRecordatorio = (Recordatorio) otro;
 
 
-        return otroRecordatorio.mensaje == this.mensaje && otroRecordatorio.horario == this.horario && otroRecordatorio.fecha == this.fecha;
+        return otroRecordatorio.mensaje == this.mensaje &&  this.horario.equals(otroRecordatorio.horario) && this.fecha.equals( otroRecordatorio.fecha);
     }
 
 }
