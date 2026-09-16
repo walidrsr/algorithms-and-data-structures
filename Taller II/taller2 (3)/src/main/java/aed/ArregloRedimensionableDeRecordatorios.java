@@ -61,9 +61,6 @@ class ArregloRedimensionableDeRecordatorios {
         for(int j = 0; j < recordatorios.length ;j++){
             nuevoArray.agregarAtras(obtener(j));
         }
-
-    
-
         return nuevoArray;
     }
 }

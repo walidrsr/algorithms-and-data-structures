@@ -1,0 +1,157 @@
+INFO ENUNCIADO
+
+Categorías de pasajeros: 
+Bronze  <10.000                   1*
+Plata   10.000< millas <49.999    1.5*
+Oro     49.999< millas < 100.000  2*
+Platino >100.000                  0*
+
+referidos -> 500 millas a ambos
+
+*no gastar millas que no poseen
+*Categorías se actualizen en funcion de millas voladas (kilometros?)
+
+almacenar:
+historial de transacciones de cada usuario (vuelos realizados, millas ganadas y canjeadas y transferencias)
+
+
+
+
+
+crearSistema: {}
+- instancia vacía (no hay usuarios)
+- promoción por defecto (factor 1, nombre "NoPromo")
+
+registrarUsuario: {identificador_usuario (Z)}
+- agrega un usuario, millas iniciadas en 0 y historial vacío
+
+registrarUsuarioConReferidor: {identificador_usuario (Z), identificador_referente (Z)}
+- agrega un usuario, millas iniciadas en 500 y historial vacío
+- +500 millas al referente
+
+acumularMillas: {identificador_usuario (Z), distancia_volada (Z), nombre_promocion (string)}
+- agrega millas a un usuario, actualiza la categoria si corresponde
+- se registra la transaccion en el historial del usuario (distancia volada, millas ganadas, nombre y factor de promocion)
+- controla el tope de la promocion (actualiza, y si es necesario elemina)
+
+canjearMillas: {identificador_usuario (Z), millas_gastadas (Z)}
+- descuenta millas disponibles del usuario
+- se registra la transaccion en el historial (cantidad de millas canjeadas)
+
+transferirMillas: {identificador_usuario (Z), millas_transferidas (Z), identificador_referente (Z)}
+- transfiere las millas de un usuario a otro
+- se registra la transaccion en el historial del usuario (millas transferidas, usuario destino, usuario origen)
+
+consultarSaldo: {identificador_usuario (Z)} --> Z
+- devuelve las millas disponibles del usuario
+
+consultarCategoria: {identificador_usuario (Z)} --> string
+- devuelve la categoria del usuario
+
+rankingMillas: {top_cuantos (Z)} --> seq<Z>
+- devuelve los n usuarios con mas millas disponibles, de mayor a menor
+- devuelve todos si n es mayor a la cantidad de usuarios totales
+
+resumenTransacciones: {identificador_usuario (Z)} --> tupla<Z,Z,Z>
+- devuelve las millas ganadas por viajes, canjeadas, millas que transfirio y millas que le fueron transferidas
+
+
+
+//abreviacion
+nombre_promocion : String, factor : R , Tope: R, Gastadas: R es PROMO
+
+//defino observador
+obs promociones dicc< nombre_promocion , struc<factor : R , Tope: R, Gastadas: R>>
+
+iniciarPromocion: (inout promociones : conj<struc<PROMO>> , in nombre_promocion: String, in factor: R)
+{
+    requiere {noEsta(promociones, nombre_promocion)}
+    requiere {factor >= 1}
+    requiere {promociones = PROMOCIONES0}
+    asegura {}
+}
+
+pred noEsta (promociones : conj<struc<PROMO>>, nueva_promo : String)
+{
+    (Vp : struct<PROMO>) p.nombre_promocion != nueva_promo
+}
+
+
+iniciarPromocionConTope {nombre_promocion (string), factor (R), tope (Z)}
+- agrega una promocion activa
+- el tope indica hasta cuantas millas se pueden ganar con ella
+
+////////////////////////////////////////////////////////////////////////////////////////////
+promociones dicc< nombre_promocion , struc<factor : R , Tope: R, Gastadas: R>> ES info_promo
+
+obs promociones dicc< nombre_promocion , struc<factor : R , Tope: R, Gastadas: R>>
+
+<"Navidad":bla bla>
+
+proc finalizarPromocion (inout promocion : info_promo  , in nombre_promocion: String)
+{
+    requiere {nombre_promocion != "NoPromo"}
+    requiere {nombre_promocion E promocion.claves}
+    requiere {promocion = PROMOCIONES0}
+
+    asegura  {promocion = delKey(PROMOCIONES0, nombre_promocion)}
+}
+
+
+
+
+
+
+
+
+elQueTieneMasMillas {} --> Z
+- devuelve el usuario que tiene mas millas
+
+elMasCanjeador {} --> Z
+- devuelve el usuario que ha usado mas millas
+
+paresTransferidosExclusivos {} --> seq<tupla<Z,Z>>
+- devuelve todos los pares de usuarios que se transfirieron entre si sin involucrar a nadie mas (y si solo hubo una transferencia?)
+
+
+
+OBSERVADORES
+
+
+obs promociones dicc< nombre_promocion , struc<factor : R , Tope: R, Gastadas: R>>
+
+lista_usuarios dicc< Z , tupla< string , Z , Z , Z , seq< tupla< Z , Z>>>> 
+-->[identificador_usuario : (nombre, millas_disponibles, millas_totales, millas_canjeadas, historial_transacciones, historial_vuelos)]
+
+historial_transacciones seq< tupla<Z, Z>> --> ((identificador_usuario2, monto),...)
+historial_vuelos        seq< tupla<Z, Z, String, Z> --> ((distancia_volada, millas_ganadas, nombre_promocion, factor),...)
+
+lista_usuarios
+    [
+        key identificador_usuario : Z ,
+
+        value 
+        (
+            nombre             : string
+            millas_disponibles : R
+            millas_totales     : R
+            millas_canjeadas   : R
+
+            historial_transacciones : 
+            (
+                identificador_usuario2 : Z
+                monto                  : R
+            )
+
+            historial_vuelos        :
+            (
+                distancia_volada       : Z
+                millas_ganadas         : R
+                nombre_promocion       : string
+                factor                 : R
+            )
+        )
+    ]
+
+
+    obs usuario dicc< Z , struc< ganadas: R, totales: R , canjeadas:R , vuelos: seq< struc<distancia : Z, millas: R, promocion: String, factor: R>> 
